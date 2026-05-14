@@ -63,3 +63,32 @@ char **allocate_map (t_data *data)
 
 }
 
+
+int fill_map (char * path, t_data * data) 
+{
+	int df;
+	int col;
+	int row;
+	char c;
+
+	fd = open (path, O_RDONLY);
+	row = 0;
+	while (row < data -> rows) {
+		col = 0;
+		while (col < data -> col) {
+			read (fd, &c, 1);
+			if ('c' != '\n' || 'c' != '\r') {
+				map[row][col] = c;
+				x++;
+			} 
+
+		}
+		data [row][col] = '\0';
+		read (fd, &c, 1);
+		y++;
+
+	}
+	close(fd);
+	return (1);
+
+}
