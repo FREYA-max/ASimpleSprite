@@ -1,4 +1,4 @@
-#include "/home/godfist/langageC/mazeSpace/so_long.h"
+#include "../so_long.h"
 
 void free_map (char **map) 
 {
