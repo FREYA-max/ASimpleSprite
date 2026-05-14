@@ -38,3 +38,28 @@ int count_row (char *path, t_data *data)
 	close(fd);
 }
 
+char **allocate_map (t_data *data)
+{
+	int i;
+	char **map;
+
+	map = malloc(sizeof(char *) * (data -> rows +1));
+	if (!map)
+		return (NULL);
+
+	i = 0;
+	while (i < data -> rows)
+	{
+		map[i] = malloc(sizeof(char *) * data -> cols + 1));
+		if (!map[i]) {
+			free(map);
+			return (NULL);
+		}
+		i++;
+
+	}
+	map[i] = NULL;
+	return (map);
+
+}
+
