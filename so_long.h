@@ -17,4 +17,15 @@ typedef struct s_data {
 	bool exit_found;
 }t_data;
 
+int     count_row(char *path, t_data *data);
+char    **allocate_map(t_data *data);
+int     fill_map(char *path, t_data *data);
+bool    check_walls(t_data *data);
+bool    check_chars(t_data *data);
+bool    check_map(t_data *data);
+char    **copy_map(t_data *data);
+void    flood_fill(t_data *data, int x, int y, char **temp_map);
+bool    check_path(t_data *data);
+void    free_map(char **map, int rows);
+
 #endif
