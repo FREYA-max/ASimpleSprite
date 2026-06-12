@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = CFLAGS = -Wall -Wextra -Werror -I. -Ilib/libft -Ilib/libftprintf
 NAME = so_long
 
 OBJDIR = obj
