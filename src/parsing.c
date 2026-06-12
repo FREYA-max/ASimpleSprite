@@ -32,7 +32,7 @@ int count_row(char *path, t_data *data)
             data->cols = current;
     }
     close(fd);
-    return (1); // Ne pas oublier le return de succès
+    return (1);
 }
 
 char **allocate_map(t_data *data)
@@ -46,10 +46,9 @@ char **allocate_map(t_data *data)
     i = 0;
     while (i < data->rows)
     {
-        // Allocation de char (1 octet), pas de char * (8 octets)
+
         map[i] = malloc(sizeof(char) * (data->cols + 1));
         if (!map[i]) {
-            // Sécurité : Libère tout ce qui a été alloué avant le crash
             while (--i >= 0)
                 free(map[i]);
             free(map);
@@ -82,8 +81,7 @@ int fill_map(char *path, t_data *data)
                 col++;
             } 
         }
-        data->map[row][col] = '\0'; // Fin de la chaîne de caractères
-        // On lit le \n pour passer à la ligne suivante dans le fichier file descriptor
+        data->map[row][col] = '\0';
         read(fd, &c, 1); 
         row++;
     }
