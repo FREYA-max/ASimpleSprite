@@ -6,7 +6,7 @@ void free_map (char **map)
 	if (!map)
 		return;
 	i = 0;
-	while (map[i]) { //free one by one the maps's rows
+	while (map[i]) { 
 		free(map[i]);
 		i++;
 	}
