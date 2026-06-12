@@ -63,4 +63,82 @@ bool check_chars (t_data *data)
 }
 
 
-void flood_will ( t_data *data, int col, int row, char **temp_map)
+char	**copy_map(t_data *data)
+{
+	char	**copy;
+	int		i;
+
+	copy = malloc(sizeof(char *) * (data->rows + 1));
+	if (!copy)
+		return (NULL);
+	i = 0;
+	while (i < data->rows)
+	{
+		copy[i] = ft_strdup(data->map[i]); 
+		if (!copy[i])
+		{
+			while (--i >= 0)
+				free(copy[i]);
+			free(copy);
+			return (NULL);
+		}
+		i++;
+	}
+	copy[i] = NULL;
+	return (copy);
+}
+
+void	flood_fill(t_data *data, int x, int y, char **temp_map)
+{
+	if (x < 0 || y < 0 || x >= data->cols || y >= data->rows 
+		|| temp_map[y][x] == '1' || temp_map[y][x] == 'V')
+		return ;
+
+	temp_map[y][x] = 'V';
+
+	flood_fill(data, x + 1, y, temp_map);
+	flood_fill(data, x - 1, y, temp_map);
+	flood_fill(data, x, y + 1, temp_map);
+	flood_fill(data, x, y - 1, temp_map);
+}
+
+bool	check_path(t_data *data)
+{
+	char	**temp_map;
+	int		i;
+	int		j;
+
+	temp_map = copy_map(data);
+	if (!temp_map)
+		return (false);
+	flood_fill(data, data->p_x, data->p_y, temp_map);
+	i = 0;
+	while (i < data->rows)
+	{
+		j = 0;
+		while (j < data->cols)
+		{
+			if (temp_map[i][j] == 'C' || temp_map[i][j] == 'E')
+			{
+				free_map(temp_map, data->rows);
+				return (false);
+			}
+			j++;
+		}
+		i++;
+	}
+	free_map(temp_map, data->rows);
+	return (true);
+}
+
+// LA FONCTION MAÎTRESSE QUI ORCHESTRE TOUT
+bool	check_map(t_data *data)
+{
+	if (!check_walls(data))
+		return (false);
+	if (!check_chars(data)) 
+		return (false);
+	if (!check_path(data))  
+		return (false);
+	return (true);
+}
